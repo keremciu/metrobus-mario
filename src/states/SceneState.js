@@ -3,13 +3,16 @@ import RainbowText from 'objects/RainbowText';
 class SceneState extends Phaser.State {
 
 	preload() {
-		this.game.load.spritesheet('mario', 'mario-sprite-2.png', 128, 128, 6);
-		this.game.load.image('metrobus', 'metrobus.png');
+		this.game.load.spritesheet('mario', 'mario-sprite.png', 128, 128, 8);
+		this.game.load.spritesheet('metrobus', 'metrobus.png', 1670, 280);
 		this.game.load.tilemap('mario', 'super_mario.json', null, Phaser.Tilemap.TILED_JSON);
     	this.game.load.image('tiles', 'super_mario.png');
+		this.game.load.audio('maintheme', ['maintheme.mp3', 'maintheme.ogg']);
 	}
 
 	create() {
+		this.music = this.game.add.audio('maintheme');
+		this.music.play();
 		this.game.stage.backgroundColor = '#000';
 		this.game.physics.startSystem(Phaser.Physics.P2JS);
 		this.jumpTimer = 0;
@@ -27,8 +30,8 @@ class SceneState extends Phaser.State {
 
 		// mario
 		this.mario = this.game.add.sprite(128, 128, 'mario');
-        this.mario.animations.add('idle', [0]);
-        this.mario.animations.play('idle');
+        this.mario.animations.add('idle', [0,1,2]);
+        this.mario.animations.play('idle', 3, true);
 		this.mario.x = center.x - 64;
 		this.mario.y = center.y;
 
